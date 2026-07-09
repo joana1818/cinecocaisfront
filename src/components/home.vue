@@ -1,5 +1,5 @@
 <script setup>
-import headerComp from '../components/header.vue'
+import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 </script>
 
@@ -36,7 +36,7 @@ import footerComp from '../components/footer.vue'
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <router-link 
               to="/programacao" 
-              class="bg-secondary text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transition transform hover:-translate-y-1 inline-flex items-center justify-center space-x-2"
+              class="bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-light transition transform hover:-translate-y-1 inline-flex items-center justify-center space-x-2"
             >
               <span>Ver Programação</span>
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,7 +143,7 @@ import footerComp from '../components/footer.vue'
               </p>
               <router-link 
                 to="/programacao" 
-                class="inline-flex items-center space-x-2 bg-secondary text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-600 transition transform hover:-translate-y-1"
+                class="inline-flex items-center space-x-2 bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:bg-primary-light transition transform hover:-translate-y-1"
               >
                 <span>Confira a Programação</span>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

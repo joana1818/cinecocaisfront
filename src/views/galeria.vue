@@ -11,7 +11,7 @@
 
     <section class="py-12 bg-gray-50 min-h-[60vh]">
       <div class="max-w-7xl mx-auto px-4">
-        <!-- Filtros -->
+        
         <div class="flex gap-3 mb-8">
           <button
             @click="destaque = null"
@@ -25,9 +25,7 @@
           >Destaques</button>
         </div>
 
-        <loading-comp v-if="loading" />
-
-        <div v-else-if="filtered.length === 0" class="flex flex-col items-center justify-center py-24 text-center">
+        <div v-if="filtered.length === 0" class="flex flex-col items-center justify-center py-24 text-center">
           <svg class="w-20 h-20 text-gray-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
@@ -45,7 +43,6 @@
       </div>
     </section>
 
-    <!-- Lightbox -->
     <transition name="fade">
       <div
         v-if="lightboxItem"
@@ -72,32 +69,41 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { galeriaAPI } from '../services/api'
-import headerComp from '../components/header.vue'
+import { ref, computed } from 'vue'
+import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 import galeriaComp from '../components/galeria.vue'
-import loadingComp from '../components/loading.vue'
 
-const items = ref([])
-const loading = ref(true)
 const destaque = ref(null)
 const lightboxItem = ref(null)
+
+const items = ref([
+  { id: 1, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Atividades presenciais', destaque: true },
+  { id: 2, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
+  { id: 3, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
+  { id: 4, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
+  { id: 5, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
+  { id: 6, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: true },
+  { id: 7, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: false },
+  { id: 8, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: false },
+  { id: 9, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: false },
+  { id: 10, titulo: 'Cine Cocais 2018', imagemUrl: '/galeria-placeholder.svg', descricao: 'Início do projeto', destaque: false },
+  { id: 11, titulo: 'Cine Cocais 2018', imagemUrl: '/galeria-placeholder.svg', descricao: 'Início do projeto', destaque: false },
+  { id: 12, titulo: 'Sessão 2025', imagemUrl: '/galeria-placeholder.svg', descricao: 'Ação Olho D\'Aguinha', destaque: true },
+  { id: 13, titulo: 'Sessão 2025', imagemUrl: '/galeria-placeholder.svg', descricao: 'Ação Olho D\'Aguinha', destaque: false },
+  { id: 14, titulo: 'Sessão 2025', imagemUrl: '/galeria-placeholder.svg', descricao: 'Ação Olho D\'Aguinha', destaque: false }
+])
 
 const filtered = computed(() =>
   destaque.value === null ? items.value : items.value.filter((i) => i.destaque === destaque.value)
 )
 
-const openLightbox = (item) => { lightboxItem.value = item }
-
-onMounted(async () => {
-  try {
-    const res = await galeriaAPI.listar({ ativo: true })
-    items.value = res.data
-  } catch (e) {
-    console.error(e)
-  } finally {
-    loading.value = false
-  }
-})
+const openLightbox = (item) => { 
+  lightboxItem.value = item 
+}
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+</style>

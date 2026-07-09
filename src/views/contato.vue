@@ -86,7 +86,7 @@
 <script setup>
 import { ref } from 'vue'
 import { contatoAPI } from '../services/api'
-import headerComp from '../components/header.vue'
+import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 
 const form = ref({ nome: '', email: '', assunto: '', mensagem: '' })
@@ -96,7 +96,7 @@ const success = ref(false)
 const contactInfo = [
   {
     label: 'Endereço',
-    value: 'IFMA Campus Cocais, Maranhão, Brasil',
+    value: 'IFMA Campus Coelho Neto, Maranhão, Brasil',
     icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
   },
   {

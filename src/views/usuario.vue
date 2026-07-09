@@ -120,7 +120,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { usersAPI, eventosAPI } from '../services/api'
-import headerComp from '../components/header.vue'
+import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 import loadingComp from '../components/loading.vue'
 

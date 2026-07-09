@@ -62,8 +62,8 @@ const tipoLabel = computed(() => ({
 const badgeClass = computed(() => ({
   EXIBICAO: 'bg-blue-100 text-blue-700',
   DEBATE: 'bg-green-100 text-green-700',
-  OFICINA: 'bg-purple-100 text-purple-700',
-  WORKSHOP: 'bg-orange-100 text-orange-700',
+  OFICINA: 'bg-primary-light/15 text-primary-dark',
+  WORKSHOP: 'bg-primary-light/15 text-primary-dark',
 }[props.evento.tipo] || 'bg-gray-100 text-gray-700'))
 
 const vagasLivre = computed(() =>
