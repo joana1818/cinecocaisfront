@@ -14,19 +14,13 @@
         <!-- Brand -->
         <div class="md:col-span-1">
           <div class="flex items-center gap-3 mb-5">
-            <svg viewBox="0 0 40 40" class="w-10 h-10">
-              <circle cx="20" cy="20" r="20" fill="#1a4a2e"/>
-              <path d="M20 32 Q19 24 18 18 Q17 12 20 8 Q23 12 22 18 Q21 24 20 32Z" fill="#c4834a"/>
-              <path d="M20 10 Q14 6 10 8 Q13 12 18 12Z" fill="#4a9e6b"/>
-              <path d="M20 10 Q26 6 30 8 Q27 12 22 12Z" fill="#2d6e47"/>
-              <path d="M20 10 Q16 4 20 2 Q24 4 20 10Z" fill="#4a9e6b"/>
-            </svg>
+            <img src="/logo-cinecocais.png" alt="Cine Cocais" class="w-12 h-12 object-cover rounded-full border-2 border-white/30 bg-white/5 p-0.5">
             <div>
-              <div class="font-heading font-bold text-lg leading-none">Cine Cocais</div>
-              <div class="text-white/40 text-xs font-display">IFMA Campus Coelho Neto</div>
+              <div class="font-heading font-bold text-lg leading-none text-white">Cine Cocais</div>
+              <div class="text-white/50 text-xs font-display">IFMA Campus Coelho Neto</div>
             </div>
           </div>
-          <p class="text-white/40 text-sm font-sans leading-relaxed mb-6">Cinema, cultura e transformação social nos Cocais do Maranhão.</p>
+          <p class="text-white/60 text-sm font-sans leading-relaxed mb-6">Cinema, cultura e transformação social nos Cocais do Maranhão.</p>
           <div class="flex gap-2">
             <!-- Instagram real -->
             <a href="https://www.instagram.com/proj_cinecocais_ifmacn?igsh=MWI2YWVsdTNjMmZxaw==" target="_blank" rel="noopener noreferrer"
@@ -51,8 +45,8 @@
           <h4 class="font-display font-semibold text-xs uppercase tracking-widest text-white/30 mb-5">Navegação</h4>
           <ul class="space-y-3">
             <li v-for="item in navLinks" :key="item.path">
-              <router-link :to="item.path" class="text-white/50 hover:text-white text-sm font-sans transition flex items-center gap-2 group">
-                <span class="w-0 group-hover:w-3 h-px bg-gold transition-all duration-300"></span>
+              <router-link :to="item.path" class="text-white/70 hover:text-white text-sm font-sans transition flex items-center gap-2 group">
+                <span class="w-0 group-hover:w-3 h-px bg-secondary transition-all duration-300"></span>
                 {{ item.label }}
               </router-link>
             </li>
@@ -72,7 +66,7 @@
               </div>
               <div>
                 <p class="text-white/25 text-xs font-display uppercase tracking-wide mb-0.5">E-mail</p>
-                <a href="mailto:cinecocais@ifma.edu.br" class="text-white/55 hover:text-white text-sm font-sans transition">cinecocais@ifma.edu.br</a>
+                <a href="mailto:cinecocais@ifma.edu.br" class="text-white/70 hover:text-white text-sm font-sans transition">cinecocais@ifma.edu.br</a>
               </div>
             </div>
             <!-- WhatsApp -->
@@ -84,7 +78,7 @@
               </div>
               <div>
                 <p class="text-white/25 text-xs font-display uppercase tracking-wide mb-0.5">WhatsApp</p>
-                <a href="https://wa.me/5598984369094" target="_blank" class="text-white/55 hover:text-white text-sm font-sans transition">(98) 98436-9094</a>
+                <a href="https://wa.me/5598984369094" target="_blank" class="text-white/70 hover:text-white text-sm font-sans transition">(98) 98436-9094</a>
               </div>
             </div>
             <!-- Localização -->
@@ -98,7 +92,7 @@
               <div>
                 <p class="text-white/25 text-xs font-display uppercase tracking-wide mb-0.5">Localização</p>
                 <!-- Substitua pelo endereço real -->
-                <p class="text-white/55 text-sm font-sans">IFMA Campus Coelho Neto<br>Coelho Neto – MA</p>
+                <p class="text-white/70 text-sm font-sans">IFMA Campus Coelho Neto<br>Coelho Neto – MA</p>
               </div>
             </div>
           </div>
@@ -107,17 +101,16 @@
         <!-- IFMA -->
         <div>
           <h4 class="font-display font-semibold text-xs uppercase tracking-widest text-white/30 mb-5">Iniciativa</h4>
-          <div class="bg-white/5 border border-white/8 rounded-2xl p-5">
-            <p class="text-white/45 text-sm font-sans leading-relaxed">
+          <div class="bg-white/10 border border-white/15 rounded-2xl p-5 backdrop-blur-sm">
+            <p class="text-white/75 text-sm font-sans leading-relaxed">
               Um projeto do <span class="text-white font-semibold">Instituto Federal do Maranhão</span>, comprometido com educação pública e transformação social.
             </p>
           </div>
         </div>
       </div>
 
-      <div class="border-t border-white/5 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-2">
-        <p class="text-white/25 text-xs font-sans">© {{ year }} Cine Cocais – IFMA. Todos os direitos reservados.</p>
-        <p class="text-white/15 text-xs font-display">Desenvolvido por alunos do ADS · IFMA Campus Coelho Neto</p>
+      <div class="border-t border-white/10 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center gap-2">
+        <p class="text-white/50 text-xs font-sans">© {{ year }} Cine Cocais – IFMA. Todos os direitos reservados.</p>
       </div>
     </div>
   </footer>

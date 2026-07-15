@@ -3,15 +3,16 @@
     <header-comp />
 
     <!-- ===== HERO ===== -->
-    <section class="hero-bg relative min-h-screen flex items-center overflow-hidden">
+    <section class="hero-bg relative min-h-[600px] flex items-center overflow-hidden pt-40 pb-32" style="background-image: url('/cocal-bg.png'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-gradient-to-r from-green-800/75 via-green-700/70 to-green-900/75"></div>
       <div class="max-w-5xl mx-auto px-5 text-center relative z-10">
-        <span class="inline-block mb-6 px-4 py-2 rounded-full border border-white/20 bg-white/10 text-white text-xs uppercase tracking-widest font-semibold">
+        <span class="inline-block mb-8 px-4 py-2 rounded-full border border-white/20 bg-white/10 text-white text-xs uppercase tracking-widest font-semibold">
           Cine Cocais · Cultura, cinema e juventude
         </span>
 
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
           Cine Cocais: uma plataforma cultural que conecta
-          <span class="text-secondary">cinema e comunidade.</span>
+          <span class="text-white">cinema e comunidade.</span>
         </h1>
 
         <p class="mx-auto max-w-2xl text-white/80 text-lg leading-relaxed mb-10">
@@ -33,11 +34,11 @@
     </section>
 
     <!-- ===== O QUE FAZEMOS ===== -->
-    <section class="py-20 bg-cocais-dark">
+    <section class="py-16 bg-cocais-dark">
       <div class="max-w-6xl mx-auto px-5">
         <div class="text-center mb-12 reveal">
           <div class="section-divider mx-auto mb-4"></div>
-          <h2 class="text-3xl md:text-4xl font-bold text-white mb-3">O que fazemos</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-primary mb-3">O que fazemos</h2>
           <p class="text-white/50 max-w-lg mx-auto">Atividades que transformam a comunidade através da cultura cinematográfica</p>
         </div>
 

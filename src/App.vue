@@ -1,6 +1,6 @@
 <template>
-  <div class="app-shell">
-    <div class="palm-background">
+  <div class="app-shell relative min-h-screen">
+    <div class="palm-background pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div class="absolute left-0 top-8 w-80 lg:w-96 palm-real opacity-30">
         <svg viewBox="0 0 300 400" class="w-full">
           <path d="M165 360 Q140 230 120 180 Q90 140 60 100 Q70 130 110 160 Q135 190 150 235 Q160 275 165 360Z" fill="rgba(74,158,107,0.24)"/>

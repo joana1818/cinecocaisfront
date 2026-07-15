@@ -3,7 +3,8 @@
     <header-comp />
 
     <!-- Header -->
-    <section class="pt-32 pb-20 bg-gradient-hero texture-overlay relative overflow-hidden">
+    <section class="pt-32 pb-20 relative overflow-hidden" style="background-image: url('/cocal-bg.png'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-gradient-to-r from-green-900/85 via-green-800/80 to-green-900/85"></div>
       <div class="absolute bottom-0 right-0 opacity-15 pointer-events-none">
         <svg viewBox="0 0 300 400" width="260">
           <path d="M150 400 Q145 300 135 240 Q110 160 60 120 Q100 150 130 220 Q138 260 143 310 L150 400Z" fill="#4a9e6b"/>
@@ -16,7 +17,7 @@
           Agenda Cultural
         </div>
         <h1 class="font-heading text-5xl md:text-6xl font-bold text-white mb-4">Programação</h1>
-        <p class="text-white/50 font-sans max-w-xl mx-auto">Confira nossa agenda de eventos, exibições e atividades</p>
+        <p class="text-white/75 font-sans max-w-xl mx-auto">Confira nossa agenda de eventos, exibições e atividades</p>
       </div>
     </section>
 

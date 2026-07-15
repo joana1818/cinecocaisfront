@@ -3,7 +3,8 @@
     <header-comp />
 
     <!-- Page Hero -->
-    <section class="pt-32 pb-20 bg-gradient-hero texture-overlay relative overflow-hidden">
+    <section class="pt-32 pb-20 relative overflow-hidden" style="background-image: url('/cocal-bg.png'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-gradient-to-r from-green-900/85 via-green-800/80 to-green-900/85"></div>
       <div class="absolute inset-0 pointer-events-none opacity-15">
         <div class="absolute left-0 bottom-0 w-72 lg:w-96">
           <svg viewBox="0 0 300 400" class="w-full">
@@ -22,8 +23,8 @@
         <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-white/80 text-xs font-display px-4 py-2 rounded-full mb-6 tracking-widest uppercase">
           Sobre o Projeto
         </div>
-        <h1 class="font-heading text-5xl md:text-6xl font-bold text-white mb-4">O que é o<br><span class="text-primary-light">Cine Cocais?</span></h1>
-        <p class="text-white/50 font-sans max-w-xl mx-auto">Conheça a história, missão e o impacto social do projeto</p>
+        <h1 class="font-heading text-5xl md:text-6xl font-bold text-white mb-4">O que é o<br>Cine Cocais?</h1>
+        <p class="text-white/80 font-sans max-w-xl mx-auto">Conheça a história, missão e o impacto social do projeto</p>
       </div>
     </section>
 

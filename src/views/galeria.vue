@@ -2,10 +2,11 @@
   <div>
     <header-comp />
 
-    <section class="pt-32 pb-16 bg-gradient-to-br from-primary-dark to-primary">
-      <div class="max-w-4xl mx-auto px-4 text-center">
-        <h1 class="font-heading text-5xl md:text-6xl font-bold text-white mb-4">Galeria</h1>
-        <p class="text-white/80 text-lg">Momentos especiais das nossas atividades e eventos</p>
+    <section class="pt-32 pb-16 relative overflow-hidden" style="background-image: url('/cocal-bg.png'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-gradient-to-r from-green-900/85 via-green-800/80 to-green-900/85"></div>
+      <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+        <h1 class="font-heading text-5xl md:text-6xl font-bold text-white mb-4">Galeria Cine Cocais</h1>
+        <p class="text-white/85 text-lg">Memórias que contam nossa história: do início do projeto ao Festival 2025</p>
       </div>
     </section>
 
@@ -25,20 +26,57 @@
           >Destaques</button>
         </div>
 
-        <div v-if="filtered.length === 0" class="flex flex-col items-center justify-center py-24 text-center">
+        <div v-if="loading" class="flex flex-col items-center justify-center py-24 text-center">
+          <p class="text-gray-400 text-lg font-medium">Carregando galeria...</p>
+        </div>
+
+        <div v-else-if="error" class="flex flex-col items-center justify-center py-24 text-center">
+          <p class="text-red-500 text-lg font-medium mb-2">Não foi possível abrir a galeria</p>
+          <p class="text-gray-400 text-sm">{{ error }}</p>
+          <button @click="fetchGaleria" class="mt-4 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition">Tentar novamente</button>
+        </div>
+
+        <div v-else-if="filtered.length === 0" class="flex flex-col items-center justify-center py-24 text-center">
           <svg class="w-20 h-20 text-gray-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          <p class="text-gray-400 text-lg font-medium">Nenhuma foto encontrada</p>
+          <p class="text-gray-400 text-lg font-medium">Nenhuma foto cadastrada no momento</p>
         </div>
 
-        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <galeria-comp
-            v-for="item in filtered"
-            :key="item.id"
-            :item="item"
-            @click="openLightbox"
-          />
+        <div v-else class="space-y-12">
+          <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8">
+            <div class="mb-6">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary-dark">Raízes do Cine Cocais</h2>
+              <p class="text-gray-500 mt-2">Início do projeto: os primeiros passos que transformaram ideia em movimento cultural.</p>
+            </div>
+
+            <div v-if="fotosAntigas.length === 0" class="text-gray-400 text-sm">Nenhuma foto antiga encontrada com os filtros atuais.</div>
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+              <galeria-comp
+                v-for="item in fotosAntigas"
+                :key="item.id"
+                :item="item"
+                @click="openLightbox"
+              />
+            </div>
+          </section>
+
+          <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8">
+            <div class="mb-6">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary-dark">Cine Cocais 2025</h2>
+              <p class="text-gray-500 mt-2">Festival 2025: encontros, protagonismo estudantil e celebração do cinema no IFMA.</p>
+            </div>
+
+            <div v-if="fotosAtuais.length === 0" class="text-gray-400 text-sm">Nenhuma foto de 2025 encontrada com os filtros atuais.</div>
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+              <galeria-comp
+                v-for="item in fotosAtuais"
+                :key="item.id"
+                :item="item"
+                @click="openLightbox"
+              />
+            </div>
+          </section>
         </div>
       </div>
     </section>
@@ -69,38 +107,63 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { galeriaAPI } from '../services/api'
 import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 import galeriaComp from '../components/galeria.vue'
 
 const destaque = ref(null)
 const lightboxItem = ref(null)
+const loading = ref(true)
+const error = ref('')
 
-const items = ref([
-  { id: 1, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Atividades presenciais', destaque: true },
-  { id: 2, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
-  { id: 3, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
-  { id: 4, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
-  { id: 5, titulo: 'Cine Cocais 2022', imagemUrl: '/galeria-placeholder.svg', descricao: 'Sessão IFMA', destaque: false },
-  { id: 6, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: true },
-  { id: 7, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: false },
-  { id: 8, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: false },
-  { id: 9, titulo: 'Cine Cocais 2019', imagemUrl: '/galeria-placeholder.svg', descricao: 'Registros de 2019', destaque: false },
-  { id: 10, titulo: 'Cine Cocais 2018', imagemUrl: '/galeria-placeholder.svg', descricao: 'Início do projeto', destaque: false },
-  { id: 11, titulo: 'Cine Cocais 2018', imagemUrl: '/galeria-placeholder.svg', descricao: 'Início do projeto', destaque: false },
-  { id: 12, titulo: 'Sessão 2025', imagemUrl: '/galeria-placeholder.svg', descricao: 'Ação Olho D\'Aguinha', destaque: true },
-  { id: 13, titulo: 'Sessão 2025', imagemUrl: '/galeria-placeholder.svg', descricao: 'Ação Olho D\'Aguinha', destaque: false },
-  { id: 14, titulo: 'Sessão 2025', imagemUrl: '/galeria-placeholder.svg', descricao: 'Ação Olho D\'Aguinha', destaque: false }
-])
+const items = ref([])
 
 const filtered = computed(() =>
   destaque.value === null ? items.value : items.value.filter((i) => i.destaque === destaque.value)
 )
 
+const isFotoAntiga = (item) => {
+  const url = item?.imagemUrl || ''
+  return /\/uploads\/(2018|2019|2022)/i.test(url)
+}
+
+const fotosAntigas = computed(() => filtered.value.filter(isFotoAntiga))
+const fotosAtuais = computed(() => filtered.value.filter((item) => !isFotoAntiga(item)))
+
 const openLightbox = (item) => { 
   lightboxItem.value = item 
 }
+
+const resolveImageUrl = (url) => {
+  if (!url || typeof url !== 'string') return ''
+  if (url.startsWith('http://') || url.startsWith('https://')) return url
+
+  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
+  const apiOrigin = apiBase.replace(/\/api\/?$/, '')
+  const imagePath = url.startsWith('/') ? url : `/${url}`
+  return `${apiOrigin}${imagePath}`
+}
+
+const fetchGaleria = async () => {
+  loading.value = true
+  error.value = ''
+  try {
+    const res = await galeriaAPI.listar({ ativo: true })
+    items.value = (res.data || []).map((item) => ({
+      ...item,
+      imagemUrl: resolveImageUrl(item.imagemUrl),
+    }))
+  } catch (e) {
+    error.value = e.response?.data?.error || 'Não foi possível carregar a galeria agora.'
+    items.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(fetchGaleria)
 </script>
 
 <style scoped>

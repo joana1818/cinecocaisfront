@@ -3,6 +3,10 @@
     <header-comp />
 
     <main class="pt-20 min-h-screen bg-gray-50">
+      <div v-if="acessoNegadoAdmin" class="bg-amber-50 border-b border-amber-200 px-4 py-3 text-center text-amber-800 text-sm font-medium">
+        A área de mensagens é exclusiva para administradores.
+      </div>
+
       <!-- Top banner -->
       <div class="bg-gradient-to-r from-primary-dark to-primary py-10 px-4">
         <div class="max-w-6xl mx-auto flex items-center gap-5">
@@ -119,16 +123,19 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { usersAPI, eventosAPI } from '../services/api'
 import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 import loadingComp from '../components/loading.vue'
 
+const route = useRoute()
 const user = ref(null)
 const inscricoes = ref([])
 const loading = ref(true)
 const showEdit = ref(false)
 const editForm = ref({ nome: '', telefone: '' })
+const acessoNegadoAdmin = computed(() => route.query.acesso === 'admin')
 
 const initials = computed(() => {
   if (!user.value) return ''

@@ -3,8 +3,7 @@ import axios from 'axios'
 // Em desenvolvimento usa localhost, em produção usa a URL real do servidor
 // Para deploy: crie um arquivo .env com VITE_API_URL=https://api.cinecocais.com.br/api
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
-  headers: { 'Content-Type': 'application/json' },
+baseURL: import.meta.env.VITE_API_URL || 'https://cinecocaisback.onrender.com/api',  headers: { 'Content-Type': 'application/json' },
 })
 
 api.interceptors.request.use((config) => {

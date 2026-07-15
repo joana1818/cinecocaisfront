@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -76,7 +76,7 @@
 .reveal-delay-3 { transition-delay: 0.15s; }
 .reveal-delay-4 { transition-delay: 0.2s; }
 
-/* ===================== HERO (sólido, sem vídeo falso/partículas) ===================== */
+/* ===================== HERO (com vídeo de fundo) ===================== */
 .hero-bg {
   background: linear-gradient(135deg, var(--cocais-green) 0%, #3d7a65 48%, #1e4038 100%);
 }

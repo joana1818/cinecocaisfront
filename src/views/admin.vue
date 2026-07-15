@@ -26,7 +26,8 @@
           <button
             v-for="tab in tabs"
             :key="tab.key"
-            @click="activeTab = tab.key"
+            type="button"
+            @click.prevent="activeTab = tab.key"
             class="px-5 py-2 rounded-xl text-sm font-semibold transition"
             :class="activeTab === tab.key ? 'bg-primary text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'"
           >{{ tab.label }}</button>
@@ -66,7 +67,15 @@
                   </td>
                 </tr>
                 <tr v-if="eventos.length === 0">
-                  <td colspan="5" class="text-center py-10 text-gray-400">Nenhum evento cadastrado</td>
+                  <td colspan="5" class="text-center py-12">
+                    <div class="flex flex-col items-center gap-3">
+                      <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      </svg>
+                      <p class="text-gray-400 font-semibold">Nenhum evento cadastrado</p>
+                      <p class="text-gray-300 text-sm">Clique em "Novo Evento" acima para criar um</p>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -85,13 +94,19 @@
           <loading-comp v-if="loading" />
           <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div v-for="item in galeria" :key="item.id" class="relative group rounded-xl overflow-hidden">
-              <img :src="item.imagemUrl" :alt="item.titulo" class="w-full h-36 object-cover">
+              <img :src="resolveImageUrl(item.imagemUrl)" :alt="item.titulo" @error="handleImageError" class="w-full h-56 object-cover">
               <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                 <button @click="deletarGaleria(item.id)" class="text-white text-xs font-semibold bg-red-500 px-3 py-1.5 rounded-lg">Excluir</button>
               </div>
               <p class="text-xs text-gray-600 mt-1 truncate px-1">{{ item.titulo }}</p>
             </div>
-            <div v-if="galeria.length === 0" class="col-span-4 text-center py-10 text-gray-400">Nenhuma foto cadastrada</div>
+            <div v-if="galeria.length === 0" class="col-span-full flex flex-col items-center justify-center py-16">
+              <svg class="w-16 h-16 text-gray-200 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <p class="text-gray-400 font-semibold mb-1">Nenhuma foto na galeria</p>
+              <p class="text-gray-300 text-sm">Clique em "Nova Foto" acima para adicionar imagens</p>
+            </div>
           </div>
         </div>
 
@@ -212,16 +227,20 @@
         <div class="bg-white rounded-2xl shadow-2xl p-7 w-full max-w-md">
           <h3 class="font-heading text-2xl font-bold mb-5">Adicionar Foto</h3>
           <form @submit.prevent="criarGaleria" class="space-y-4">
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4">
+              <p class="text-xs text-blue-700"><strong>Dica:</strong> Cole a URL completa da imagem (deve começar com https://)</p>
+            </div>
             <div>
               <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Título</label>
               <input v-model="galeriaForm.titulo" type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm">
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">URL da Imagem</label>
-              <input v-model="galeriaForm.imagemUrl" type="url" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" placeholder="https://...">
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">URL da Imagem *</label>
+              <input v-model="galeriaForm.imagemUrl" type="url" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm" placeholder="https://exemplo.com/imagem.jpg">
+              <p class="text-xs text-gray-400 mt-2">Exemplo: https://drive.google.com/uc?export=view&id=SEU_ID</p>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Descrição</label>
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Descrição (opcional)</label>
               <input v-model="galeriaForm.descricao" type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm">
             </div>
             <div class="flex items-center gap-2">
@@ -280,6 +299,20 @@ const formatDate = (d) => {
   const date = new Date(d)
   if (isNaN(date.getTime())) return '--'
   return date.toLocaleDateString('pt-BR', { timeZone: 'UTC' })
+}
+
+const resolveImageUrl = (url) => {
+  if (!url || typeof url !== 'string') return ''
+  if (url.startsWith('http://') || url.startsWith('https://')) return url
+
+  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
+  const apiOrigin = apiBase.replace(/\/api\/?$/, '')
+  const imagePath = url.startsWith('/') ? url : `/${url}`
+  return `${apiOrigin}${imagePath}`
+}
+
+const handleImageError = (event) => {
+  event.target.src = '/logo-cinecocais.png'
 }
 
 const fetchAll = async () => {

@@ -2,10 +2,11 @@
   <div>
     <header-comp />
 
-    <section class="pt-32 pb-16 bg-gradient-to-br from-primary-dark to-primary">
-      <div class="max-w-4xl mx-auto px-4 text-center">
+    <section class="pt-32 pb-16 relative overflow-hidden" style="background-image: url('/cocal-bg.png'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-gradient-to-r from-green-900/85 via-green-800/80 to-green-900/85"></div>
+      <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
         <h1 class="font-heading text-5xl md:text-6xl font-bold text-white mb-4">Contato</h1>
-        <p class="text-white/80 text-lg">Entre em contato conosco e faça parte deste projeto</p>
+        <p class="text-white/85 text-lg">Entre em contato conosco e faça parte deste projeto</p>
       </div>
     </section>
 

@@ -35,7 +35,9 @@ router.beforeEach((to, _from, next) => {
   const tipo = localStorage.getItem('userTipo')
 
   if (to.meta.requiresAuth && !token) return next('/login')
-  if (to.meta.requiresAdmin && tipo !== 'ADMIN') return next('/')
+  if (to.meta.requiresAdmin && tipo !== 'ADMIN') {
+    return next({ path: '/usuario', query: { acesso: 'admin' } })
+  }
   next()
 })
 
