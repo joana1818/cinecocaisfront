@@ -129,7 +129,7 @@
 </template>
 
 <script setup>
-import headerComp from '../components/Header.vue'
+import headerComp from '../components/header.vue'
 import footerComp from '../components/footer.vue'
 import { useReveal } from '../composables/useReveal'
 

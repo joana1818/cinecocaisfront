@@ -109,7 +109,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { galeriaAPI } from '../services/api'
-import headerComp from '../components/Header.vue'
+import headerComp from '../components/header.vue'
 import footerComp from '../components/footer.vue'
 import galeriaComp from '../components/galeria.vue'
 
