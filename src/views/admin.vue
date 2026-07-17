@@ -263,7 +263,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { eventosAPI, galeriaAPI, contatoAPI, usersAPI } from '../services/api'
-import headerComp from '../components/Header.vue'
+import headerComp from '../components/header.vue'
 import footerComp from '../components/footer.vue'
 import loadingComp from '../components/loading.vue'
 
