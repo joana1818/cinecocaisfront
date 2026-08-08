@@ -6,6 +6,23 @@ const api = axios.create({
 baseURL: import.meta.env.VITE_API_URL || 'https://cinecocaisback.onrender.com/api',  headers: { 'Content-Type': 'application/json' },
 })
 
+export const getApiOrigin = () => {
+  const rawBase = api.defaults.baseURL || ''
+  if (!rawBase) return ''
+
+  // Remove o sufixo /api para montar URLs públicas de assets como /uploads.
+  return rawBase.replace(/\/api\/?$/, '')
+}
+
+export const resolveAssetUrl = (url) => {
+  if (!url || typeof url !== 'string') return ''
+  if (/^(https?:)?\/\//i.test(url) || url.startsWith('data:') || url.startsWith('blob:')) return url
+
+  const apiOrigin = getApiOrigin()
+  const imagePath = url.startsWith('/') ? url : `/${url}`
+  return apiOrigin ? `${apiOrigin}${imagePath}` : imagePath
+}
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) config.headers.Authorization = `Bearer ${token}`

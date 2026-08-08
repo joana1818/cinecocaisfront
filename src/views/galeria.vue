@@ -108,7 +108,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { galeriaAPI } from '../services/api'
+import { galeriaAPI, resolveAssetUrl } from '../services/api'
 import headerComp from '../components/header.vue'
 import footerComp from '../components/footer.vue'
 import galeriaComp from '../components/galeria.vue'
@@ -136,16 +136,6 @@ const openLightbox = (item) => {
   lightboxItem.value = item 
 }
 
-const resolveImageUrl = (url) => {
-  if (!url || typeof url !== 'string') return ''
-  if (url.startsWith('http://') || url.startsWith('https://')) return url
-
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
-  const apiOrigin = apiBase.replace(/\/api\/?$/, '')
-  const imagePath = url.startsWith('/') ? url : `/${url}`
-  return `${apiOrigin}${imagePath}`
-}
-
 const fetchGaleria = async () => {
   loading.value = true
   error.value = ''
@@ -153,7 +143,7 @@ const fetchGaleria = async () => {
     const res = await galeriaAPI.listar({ ativo: true })
     items.value = (res.data || []).map((item) => ({
       ...item,
-      imagemUrl: resolveImageUrl(item.imagemUrl),
+      imagemUrl: resolveAssetUrl(item.imagemUrl),
     }))
   } catch (e) {
     error.value = e.response?.data?.error || 'Não foi possível carregar a galeria agora.'

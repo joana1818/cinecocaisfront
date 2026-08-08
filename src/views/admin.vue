@@ -262,7 +262,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { eventosAPI, galeriaAPI, contatoAPI, usersAPI } from '../services/api'
+import { eventosAPI, galeriaAPI, contatoAPI, usersAPI, resolveAssetUrl } from '../services/api'
 import headerComp from '../components/header.vue'
 import footerComp from '../components/footer.vue'
 import loadingComp from '../components/loading.vue'
@@ -301,15 +301,7 @@ const formatDate = (d) => {
   return date.toLocaleDateString('pt-BR', { timeZone: 'UTC' })
 }
 
-const resolveImageUrl = (url) => {
-  if (!url || typeof url !== 'string') return ''
-  if (url.startsWith('http://') || url.startsWith('https://')) return url
-
-  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
-  const apiOrigin = apiBase.replace(/\/api\/?$/, '')
-  const imagePath = url.startsWith('/') ? url : `/${url}`
-  return `${apiOrigin}${imagePath}`
-}
+const resolveImageUrl = (url) => resolveAssetUrl(url)
 
 const handleImageError = (event) => {
   event.target.src = '/logo-cinecocais.png'
