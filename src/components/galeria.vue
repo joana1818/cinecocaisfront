@@ -1,10 +1,11 @@
 <template>
   <div class="group relative overflow-hidden rounded-2xl cursor-pointer" @click="$emit('click', item)">
     <img
-      :src="item.imagemUrl"
-      :alt="item.titulo"
-      class="w-full h-[450px] md:h-[550px] object-cover transition-transform duration-500 group-hover:scale-105"
+      :src="item.imagemUrl || '/galeria-placeholder.svg'"
+      :alt="item.titulo || 'Foto da galeria'"
+      class="w-full h-[260px] md:h-[320px] object-cover transition-transform duration-500 group-hover:scale-105"
       loading="lazy"
+      @error="handleImageError"
     >
     <!-- Overlay -->
     <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 md:p-7">

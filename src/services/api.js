@@ -16,10 +16,15 @@ export const getApiOrigin = () => {
 
 export const resolveAssetUrl = (url) => {
   if (!url || typeof url !== 'string') return ''
-  if (/^(https?:)?\/\//i.test(url) || url.startsWith('data:') || url.startsWith('blob:')) return url
+
+  const normalized = url.trim().replace(/\\/g, '/')
+  if (!normalized) return ''
+  if (/^(https?:)?\/\//i.test(normalized) || normalized.startsWith('data:') || normalized.startsWith('blob:')) {
+    return normalized
+  }
 
   const apiOrigin = getApiOrigin()
-  const imagePath = url.startsWith('/') ? url : `/${url}`
+  const imagePath = normalized.startsWith('/') ? normalized : `/${normalized}`
   return apiOrigin ? `${apiOrigin}${imagePath}` : imagePath
 }
 

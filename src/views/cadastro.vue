@@ -7,7 +7,7 @@
 
       <div class="relative z-10 text-center text-white px-12">
         <div class="w-28 h-28 mx-auto mb-6 rounded-3xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/15 shadow-xl">
-          <img src="/logocinecocais.png" alt="Cine Cocais" class="w-24 h-24 object-contain drop-shadow-lg" />
+          <img src="/logo-cinecocais.png" alt="Cine Cocais" class="w-24 h-24 object-contain drop-shadow-lg" />
         </div>
         <h2 class="font-heading text-4xl font-bold mb-3">Junte-se a nós!</h2>
         <p class="text-white/70 font-sans leading-relaxed">Cadastre-se para participar dos eventos, se inscrever nas atividades e acompanhar o Cine Cocais.</p>
@@ -20,7 +20,7 @@
         <!-- Mobile logo -->
         <div class="lg:hidden text-center mb-8">
           <router-link to="/" class="inline-flex items-center gap-3">
-            <img src="/logocinecocais.png" alt="Cine Cocais" class="w-12 h-12 object-contain" />
+            <img src="/logo-cinecocais.png" alt="Cine Cocais" class="w-12 h-12 object-contain" />
             <span class="font-heading font-bold text-xl text-primary-dark">Cine Cocais</span>
           </router-link>
         </div>

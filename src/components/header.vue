@@ -11,6 +11,7 @@
         <!-- Logo/Name - Elegante e Estilizado -->
         <router-link to="/" class="flex-shrink-0 group">
           <div class="flex items-center gap-3">
+            <img src="/logocinecocais.png" alt="Cine Cocais" class="w-12 h-12 rounded-full object-cover border-2 border-white/20 bg-white/5 shadow-lg shadow-black/20" />
             <div class="leading-none">
               <span class="text-3xl font-black text-white tracking-tight drop-shadow-md transition-colors group-hover:text-white/90" style="font-family: 'Playfair Display', serif;">
                 Cine

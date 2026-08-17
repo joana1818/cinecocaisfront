@@ -93,7 +93,12 @@
           </svg>
         </button>
         <div class="max-w-4xl w-full" @click.stop>
-          <img :src="lightboxItem.imagemUrl" :alt="lightboxItem.titulo" class="w-full rounded-2xl shadow-2xl max-h-[80vh] object-contain">
+          <img
+            :src="lightboxItem.imagemUrl || '/galeria-placeholder.svg'"
+            :alt="lightboxItem.titulo || 'Foto da galeria'"
+            class="w-full rounded-2xl shadow-2xl max-h-[80vh] object-contain"
+            @error="($event.target.src = '/galeria-placeholder.svg')"
+          >
           <div class="text-white mt-4 text-center">
             <h3 class="font-heading text-2xl font-bold">{{ lightboxItem.titulo }}</h3>
             <p v-if="lightboxItem.descricao" class="text-white/60 mt-1 text-sm">{{ lightboxItem.descricao }}</p>
@@ -143,7 +148,7 @@ const fetchGaleria = async () => {
     const res = await galeriaAPI.listar({ ativo: true })
     items.value = (res.data || []).map((item) => ({
       ...item,
-      imagemUrl: resolveAssetUrl(item.imagemUrl),
+      imagemUrl: resolveAssetUrl(item.imagemUrl || item.url || item.foto || item.capa),
     }))
   } catch (e) {
     error.value = e.response?.data?.error || 'Não foi possível carregar a galeria agora.'
