@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- Notificação Flutuante (Toast) -->
+    <div v-if="errorMsg" class="fixed top-24 right-5 z-50 bg-red-50 border-l-4 border-red-500 text-red-700 px-6 py-4 rounded shadow-xl flex items-center gap-3 animate-pulse">
+      <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <span class="font-medium">{{ errorMsg }}</span>
+    </div>
+
     <header-comp />
 
     <section class="pt-32 pb-16 relative overflow-hidden" style="background-image: url('/cocal-bg.png'); background-size: cover; background-position: center;">
@@ -95,6 +101,7 @@ const router = useRouter()
 const form = ref({ nome: '', email: '', assunto: '', mensagem: '' })
 const loading = ref(false)
 const success = ref(false)
+const errorMsg = ref('')
 
 const contactInfo = [
   {
@@ -115,10 +122,14 @@ const contactInfo = [
 ]
 
 const submit = async () => {
-  // Se o usuário não tiver token, barra o envio e redireciona para o login
+  // Exibe a notificação bonita em vez do alert
   if (!localStorage.getItem('token')) {
-    alert('Você precisa estar cadastrado e logado para enviar uma mensagem!')
-    return router.push('/login')
+    errorMsg.value = 'Você precisa estar cadastrado e logado para enviar uma mensagem!'
+    setTimeout(() => {
+      errorMsg.value = ''
+      router.push('/login')
+    }, 2500) // Aguarda 2.5 segundos para a pessoa ler e depois redireciona
+    return
   }
 
   loading.value = true
