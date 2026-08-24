@@ -94,7 +94,7 @@
           <loading-comp v-if="loading" />
           <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div v-for="item in galeria" :key="item.id" class="relative group rounded-xl overflow-hidden">
-              <img :src="resolveImageUrl(item.imagemUrl)" :alt="item.titulo" @error="handleImageError" class="w-full h-56 object-cover">
+              <img :src="resolveImageUrl(item)" :alt="item.titulo" @error="handleImageError" class="w-full h-56 object-cover">
               <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                 <button @click="deletarGaleria(item.id)" class="text-white text-xs font-semibold bg-red-500 px-3 py-1.5 rounded-lg">Excluir</button>
               </div>
@@ -262,8 +262,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { eventosAPI, galeriaAPI, contatoAPI, usersAPI, resolveAssetUrl } from '../services/api'
-import headerComp from '../components/header.vue'
+import { eventosAPI, galeriaAPI, contatoAPI, usersAPI, normalizeGaleriaItem } from '../services/api'
+import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 import loadingComp from '../components/loading.vue'
 
@@ -301,7 +301,7 @@ const formatDate = (d) => {
   return date.toLocaleDateString('pt-BR', { timeZone: 'UTC' })
 }
 
-const resolveImageUrl = (url) => resolveAssetUrl(url)
+const resolveImageUrl = (item) => item.imagemUrl
 
 const handleImageError = (event) => {
   event.target.src = '/logo-cinecocais.png'
@@ -317,7 +317,7 @@ const fetchAll = async () => {
       usersAPI.listar({}),
     ])
     if (ev.status === 'fulfilled') eventos.value = ev.value.data
-    if (gal.status === 'fulfilled') galeria.value = gal.value.data
+    if (gal.status === 'fulfilled') galeria.value = (gal.value.data || []).map(normalizeGaleriaItem)
     if (msg.status === 'fulfilled') mensagens.value = msg.value.data
     if (usr.status === 'fulfilled') usuarios.value = usr.value.data
   } finally {

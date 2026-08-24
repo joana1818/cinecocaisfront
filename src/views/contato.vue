@@ -87,7 +87,7 @@
 <script setup>
 import { ref } from 'vue'
 import { contatoAPI } from '../services/api'
-import headerComp from '../components/header.vue'
+import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 
 const form = ref({ nome: '', email: '', assunto: '', mensagem: '' })

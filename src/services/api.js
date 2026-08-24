@@ -1,9 +1,10 @@
 import axios from 'axios'
 
-// Em desenvolvimento usa localhost, em produção usa a URL real do servidor
-// Para deploy: crie um arquivo .env com VITE_API_URL=https://api.cinecocais.com.br/api
+const baseUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'https://cinecocaisback.onrender.com/api')
+
 const api = axios.create({
-baseURL: import.meta.env.VITE_API_URL || 'https://cinecocaisback.onrender.com/api',  headers: { 'Content-Type': 'application/json' },
+  baseURL: baseUrl,
+  headers: { 'Content-Type': 'application/json' },
 })
 
 export const getApiOrigin = () => {
@@ -27,6 +28,12 @@ export const resolveAssetUrl = (url) => {
   const imagePath = normalized.startsWith('/') ? normalized : `/${normalized}`
   return apiOrigin ? `${apiOrigin}${imagePath}` : imagePath
 }
+
+// Fonte da verdade: sempre usar imagemUrl, com fallback para nomes antigos salvos por engano.
+export const normalizeGaleriaItem = (item) => ({
+  ...item,
+  imagemUrl: resolveAssetUrl(item.imagemUrl || item.imageUrl || item.url || item.foto || item.capa),
+})
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')

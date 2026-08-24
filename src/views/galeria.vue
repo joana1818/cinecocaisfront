@@ -113,8 +113,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { galeriaAPI, resolveAssetUrl } from '../services/api'
-import headerComp from '../components/header.vue'
+import { galeriaAPI, normalizeGaleriaItem } from '../services/api'
+import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 import galeriaComp from '../components/galeria.vue'
 
@@ -146,10 +146,7 @@ const fetchGaleria = async () => {
   error.value = ''
   try {
     const res = await galeriaAPI.listar({ ativo: true })
-    items.value = (res.data || []).map((item) => ({
-      ...item,
-      imagemUrl: resolveAssetUrl(item.imagemUrl || item.url || item.foto || item.capa),
-    }))
+    items.value = (res.data || []).map(normalizeGaleriaItem)
   } catch (e) {
     error.value = e.response?.data?.error || 'Não foi possível carregar a galeria agora.'
     items.value = []
