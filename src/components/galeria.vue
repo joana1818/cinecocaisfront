@@ -1,26 +1,25 @@
 <template>
-  <div class="group relative overflow-hidden rounded-2xl cursor-pointer" @click="$emit('click', item)">
-    <img
-      :src="item.imagemUrl || '/galeria-placeholder.svg'"
-      :alt="item.titulo || 'Foto da galeria'"
-      class="w-full h-[260px] md:h-[320px] object-cover transition-transform duration-500 group-hover:scale-105"
-      loading="lazy"
-      @error="handleImageError"
-    >
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 md:p-7">
-      <div class="text-right">
-        <span v-if="item.destaque" class="inline-block bg-secondary text-white text-xs font-semibold px-3 py-1 rounded-full">Destaque</span>
-      </div>
-      <div>
-        <h3 class="text-white font-bold text-xl md:text-2xl leading-tight">{{ item.titulo }}</h3>
-        <p v-if="item.descricao" class="text-white/85 text-sm md:text-base mt-2 line-clamp-2">{{ item.descricao }}</p>
-        <p class="text-white/60 text-xs mt-3">{{ item.ano }}</p>
-      </div>
+  <div class="group relative overflow-hidden rounded-[28px] border border-gray-200/80 bg-white shadow-sm cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1" @click="$emit('click', item)">
+    <div class="overflow-hidden">
+      <img
+        :src="item.imagemUrl || '/galeria-placeholder.svg'"
+        :alt="item.titulo || 'Foto da galeria'"
+        class="w-full aspect-[4/5] object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        loading="lazy"
+        @error="handleImageError"
+      >
     </div>
-    <!-- Badge ano -->
-    <div class="absolute top-4 left-4 bg-black/60 text-white text-sm font-semibold px-3 py-1.5 rounded-full">
-      {{ item.ano }}
+
+    <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-90"></div>
+
+    <div class="absolute inset-x-0 bottom-0 p-5 md:p-6">
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <span v-if="item.destaque" class="inline-flex items-center rounded-full bg-secondary px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white">Destaque</span>
+        <span v-if="item.ano" class="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/80 backdrop-blur-sm">{{ item.ano }}</span>
+      </div>
+
+      <h3 class="text-white font-bold text-xl md:text-2xl leading-tight">{{ item.titulo }}</h3>
+      <p v-if="item.descricao" class="mt-2 text-sm text-white/80 line-clamp-2">{{ item.descricao }}</p>
     </div>
   </div>
 </template>

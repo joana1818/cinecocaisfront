@@ -51,7 +51,7 @@
             </div>
 
             <div v-if="fotosAntigas.length === 0" class="text-gray-400 text-sm">Nenhuma foto antiga encontrada com os filtros atuais.</div>
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
               <galeria-comp
                 v-for="item in fotosAntigas"
                 :key="item.id"
@@ -68,7 +68,7 @@
             </div>
 
             <div v-if="fotosAtuais.length === 0" class="text-gray-400 text-sm">Nenhuma foto de 2025 encontrada com os filtros atuais.</div>
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
               <galeria-comp
                 v-for="item in fotosAtuais"
                 :key="item.id"
@@ -96,12 +96,12 @@
           <img
             :src="lightboxItem.imagemUrl || '/galeria-placeholder.svg'"
             :alt="lightboxItem.titulo || 'Foto da galeria'"
-            class="w-full rounded-2xl shadow-2xl max-h-[80vh] object-contain"
+            class="w-full rounded-[28px] shadow-2xl max-h-[80vh] object-cover"
             @error="($event.target.src = '/galeria-placeholder.svg')"
           >
-          <div class="text-white mt-4 text-center">
-            <h3 class="font-heading text-2xl font-bold">{{ lightboxItem.titulo }}</h3>
-            <p v-if="lightboxItem.descricao" class="text-white/60 mt-1 text-sm">{{ lightboxItem.descricao }}</p>
+          <div class="text-white mt-5 text-center">
+            <h3 class="font-heading text-2xl md:text-3xl font-bold">{{ lightboxItem.titulo }}</h3>
+            <p v-if="lightboxItem.descricao" class="text-white/65 mt-2 text-sm md:text-base">{{ lightboxItem.descricao }}</p>
           </div>
         </div>
       </div>
