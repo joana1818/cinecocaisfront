@@ -86,10 +86,12 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { contatoAPI } from '../services/api'
 import headerComp from '../components/Header.vue'
 import footerComp from '../components/footer.vue'
 
+const router = useRouter()
 const form = ref({ nome: '', email: '', assunto: '', mensagem: '' })
 const loading = ref(false)
 const success = ref(false)
@@ -110,10 +112,15 @@ const contactInfo = [
     value: '(98) 98436-9094',
     icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>`,
   },
-  
 ]
 
 const submit = async () => {
+  // Se o usuário não tiver token, barra o envio e redireciona para o login
+  if (!localStorage.getItem('token')) {
+    alert('Você precisa estar cadastrado e logado para enviar uma mensagem!')
+    return router.push('/login')
+  }
+
   loading.value = true
   try {
     await contatoAPI.enviar(form.value)

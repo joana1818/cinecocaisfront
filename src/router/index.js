@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
+  // ROTAS PÚBLICAS (Navegação livre para visitantes)
   { path: '/', name: 'home', component: () => import('../views/home.vue') },
   { path: '/sobre', name: 'sobre', component: () => import('../views/sobre.vue') },
   { path: '/programacao', name: 'programacao', component: () => import('../views/programacao.vue') },
@@ -8,6 +9,8 @@ const routes = [
   { path: '/contato', name: 'contato', component: () => import('../views/contato.vue') },
   { path: '/cadastro', name: 'cadastro', component: () => import('../views/cadastro.vue') },
   { path: '/login', name: 'login', component: () => import('../views/login.vue') },
+
+  // ROTAS PRIVADAS (Exigem estar logado)
   {
     path: '/usuario',
     name: 'usuario',
@@ -30,7 +33,7 @@ const router = createRouter({
   },
 })
 
-// Função para verificar se o JWT expirou
+// Função para validar se o token JWT expirou
 function isTokenExpired(token) {
   if (!token) return true
   try {
@@ -38,7 +41,7 @@ function isTokenExpired(token) {
     if (!payload.exp) return false
     return Date.now() >= payload.exp * 1000
   } catch {
-    return true // Token inválido ou malformado
+    return true
   }
 }
 
@@ -46,9 +49,7 @@ router.beforeEach((to, _from, next) => {
   const token = localStorage.getItem('token')
   const tipo = localStorage.getItem('userTipo')
 
-  // Se a rota exige autenticação
   if (to.meta.requiresAuth) {
-    // Caso o token não exista ou já tenha expirado, limpa o storage e manda pro login
     if (!token || isTokenExpired(token)) {
       localStorage.removeItem('token')
       localStorage.removeItem('userTipo')
@@ -56,7 +57,6 @@ router.beforeEach((to, _from, next) => {
     }
   }
 
-  // Se exige admin e o tipo não for ADMIN
   if (to.meta.requiresAdmin && tipo !== 'ADMIN') {
     return next({ path: '/usuario', query: { acesso: 'admin' } })
   }
