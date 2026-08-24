@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'https://cinecocaisback.onrender.com/api'
+const baseUrl = 'https://cinecocaisback-production.up.railway.app/api'
 
 const api = axios.create({
   baseURL: baseUrl,
