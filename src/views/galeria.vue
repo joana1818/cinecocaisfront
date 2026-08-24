@@ -46,31 +46,13 @@
         <div v-else class="space-y-12">
           <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8">
             <div class="mb-6">
-              <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary-dark">Raízes do Cine Cocais</h2>
-              <p class="text-gray-500 mt-2">Início do projeto: os primeiros passos que transformaram ideia em movimento cultural.</p>
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary-dark">Cine Cocais</h2>
             </div>
 
-            <div v-if="fotosAntigas.length === 0" class="text-gray-400 text-sm">Nenhuma foto antiga encontrada com os filtros atuais.</div>
+            <div v-if="items.length === 0" class="text-gray-400 text-sm">Nenhuma foto cadastrada no momento.</div>
             <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
               <galeria-comp
-                v-for="item in fotosAntigas"
-                :key="item.id"
-                :item="item"
-                @click="openLightbox"
-              />
-            </div>
-          </section>
-
-          <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8">
-            <div class="mb-6">
-              <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary-dark">Cine Cocais 2025</h2>
-              <p class="text-gray-500 mt-2">Festival 2025: encontros, protagonismo estudantil e celebração do cinema no IFMA.</p>
-            </div>
-
-            <div v-if="fotosAtuais.length === 0" class="text-gray-400 text-sm">Nenhuma foto de 2025 encontrada com os filtros atuais.</div>
-            <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
-              <galeria-comp
-                v-for="item in fotosAtuais"
+                v-for="item in items"
                 :key="item.id"
                 :item="item"
                 @click="openLightbox"
@@ -133,9 +115,6 @@ const isFotoAntiga = (item) => {
   const url = item?.imagemUrl || ''
   return /\/uploads\/(2018|2019|2022)/i.test(url)
 }
-
-const fotosAntigas = computed(() => filtered.value.filter(isFotoAntiga))
-const fotosAtuais = computed(() => filtered.value.filter((item) => !isFotoAntiga(item)))
 
 const openLightbox = (item) => { 
   lightboxItem.value = item 
