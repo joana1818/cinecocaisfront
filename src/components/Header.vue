@@ -1,5 +1,6 @@
 <template>
   <nav
+    translate="no"
     class="fixed w-full top-0 z-50 transition-all duration-500"
     :class="(scrolled || !isHeroPage)
       ? 'bg-cocais-dark/90 backdrop-blur-md border-b border-white/10 shadow-2xl shadow-black/40 py-3.5'

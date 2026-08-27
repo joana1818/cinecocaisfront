@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-cocais-dark text-white relative overflow-hidden">
+  <footer class="bg-cocais-dark text-white relative overflow-hidden" translate="no">
     <div class="h-px bg-gradient-to-r from-transparent via-primary-muted to-transparent"></div>
     <div class="absolute bottom-0 right-0 opacity-5 pointer-events-none">
       <svg viewBox="0 0 300 400" width="300">
